@@ -1,0 +1,14 @@
+<launch>
+<!-- 
+  <include file="$(find wego)/launch/teleop.launch"/> 
+  <include file="$(find wego)/launch/navigation.launch"/>
+-->
+  <node pkg="wego" type="control_mux.py" name="control_mux" output="screen"/>
+  <node pkg="wego" type="navigation_client.py" name="navigation_client" output="screen"/>
+  <node pkg="wego" type="go_to_rotary.py" name="LKAS_Node" output="screen"/>
+  <node pkg="wego" type="rotary.py" name="rotary_node" output="screen"/>
+  <node pkg="wego" type="traffic_to_five_mile.py" name="traffic_to_five_mile_node" output="screen"/>
+  <!-- <node pkg="wego" type="traffic.py" name="traffic_control_node" output="screen"/>
+  <node pkg="wego" type="five_mile.py" name="five_mile" output="screen"/>
+-->
+</launch>
