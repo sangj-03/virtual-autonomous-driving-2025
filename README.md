@@ -50,26 +50,28 @@ Team modules in `wego/scripts/`:
 
 ```text
 ├── wego/
-│   ├── CMakeLists.txt
+│   ├── CMakeLists.txt, package.xml
 │   ├── launch/mission.launch          # starts all mission nodes
-│   └── scripts/                       # navigation client, mux and mission nodes
+│   ├── scripts/                       # navigation client, mux, mission nodes, odom TF
+│   └── src/convert_lidar.cpp          # LiDAR scan reordering
 └── wego_2d_nav/
+    ├── CMakeLists.txt, package.xml
     ├── launch/move_base.launch        # navigation stack
-    └── params/                        # costmap and TEB parameters
+    ├── params/                        # costmap and TEB parameters
+    └── scripts/cmd_vel_to_ackermann.py
 ```
 
 ## What is not included
 
-This repository holds the code we wrote or tuned for the competition, not a complete workspace. It does not build on its own.
+Both packages now have their `package.xml` and `CMakeLists.txt`, but the repository is still not a complete workspace. These parts are missing:
 
-- `package.xml` files, the course map, and the SLAM and localization launch files
-- `pub_odom.py` and `convert_lidar.cpp` (listed in `CMakeLists.txt`) and `cmd_vel_to_ackermann.py` (started by `move_base.launch`)
+- The course map, and the SLAM and localization launch files
 - The MORAI simulator and its ROS bridge
 
-To run it, place both packages in a catkin workspace that already provides these, then:
+To run it, place both packages in a catkin workspace that provides these, then:
 
 ```bash
-roslaunch wego_2d_nav move_base.launch   # plus map server and localization from the base workspace
+roslaunch wego_2d_nav move_base.launch   # plus map server and localization from that workspace
 roslaunch wego mission.launch
 ```
 
@@ -81,4 +83,11 @@ roslaunch wego mission.launch
 
 ## Acknowledgements
 
-The workspace layout and the navigation setup started from the open repository of team Sparkle from an earlier competition: [hyunjoon0208/Sparkle](https://github.com/hyunjoon0208/Sparkle).
+The workspace layout and the navigation setup started from the open repository of team Sparkle from an earlier competition: [hyunjoon0208/Sparkle](https://github.com/hyunjoon0208/Sparkle). These files are copied from it unchanged:
+
+| File | Role |
+| --- | --- |
+| `wego/package.xml`, `wego_2d_nav/package.xml`, `wego_2d_nav/CMakeLists.txt` | Package definitions |
+| `wego/scripts/pub_odom.py` | Broadcasts the `odom` TF from `/odom` |
+| `wego/src/convert_lidar.cpp` | Reorders the simulator's `lidar2D` scan and republishes it as `/scan` |
+| `wego_2d_nav/scripts/cmd_vel_to_ackermann.py` | Converts `move_base` velocity commands into Ackermann commands |
