@@ -81,13 +81,3 @@ roslaunch wego mission.launch
 - Section switching depends on counting stop lines. One missed or double-counted stop line shifts every later section.
 - `go_to_rotary.py` uses `np.int`, which NumPy 1.24 removed. The code ran on ROS Noetic's default NumPy and needs `int` on newer versions.
 
-## Acknowledgements
-
-The workspace layout and the navigation setup started from the open repository of team Sparkle from an earlier competition: [hyunjoon0208/Sparkle](https://github.com/hyunjoon0208/Sparkle). These files are copied from it unchanged:
-
-| File | Role |
-| --- | --- |
-| `wego/package.xml`, `wego_2d_nav/package.xml`, `wego_2d_nav/CMakeLists.txt` | Package definitions |
-| `wego/scripts/pub_odom.py` | Broadcasts the `odom` TF from `/odom` |
-| `wego/src/convert_lidar.cpp` | Reorders the simulator's `lidar2D` scan and republishes it as `/scan` |
-| `wego_2d_nav/scripts/cmd_vel_to_ackermann.py` | Converts `move_base` velocity commands into Ackermann commands |
